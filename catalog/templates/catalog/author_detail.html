@@ -9,11 +9,14 @@
 <p><strong>Date of Birth:</strong> {{ author.date_of_birth }}</p>
 <p><strong>Date of Death:</strong> {{ author.date_of_death }}</p>
 
-
+<p><b>All Books: </b></p>
 {% for book in author.book_set.all  %}
 
 <a href="{{book.get_absolute_url}}">{{book.title}}</a><br>
 
 {% endfor %}
+<div class="dropdown-divider"></div>
+<a href="{% url 'author-delete' author.id %}">Delete Author</a><br>
+<a href="{% url 'author-update' author.id %}">Update Author</a>
 
 {% endblock %}
