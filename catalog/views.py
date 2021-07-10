@@ -215,7 +215,7 @@ class LangDeleteView(DeleteView):
 
 class InstListView(generic.ListView):
     model = BookInstance
-    paginate_by = 20
+    paginate_by = 10
     ordering = ['-due_back']
 
 

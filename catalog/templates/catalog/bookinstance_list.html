@@ -3,10 +3,11 @@
 {% block content %}
 <h1>Book Instance List</h1>
 {% if bookinstance_list %}
-<ul>
+<ul class="list-group list-group-flush">
     {% for bookinstance in bookinstance_list %}
-    <li>
-        <a href="{% url 'inst-detail' bookinstance.id %}">{{ bookinstance.book }} ({{ bookinstance.id }})</a>
+    <li class="list-group-item">
+        <a href="{% url 'inst-detail' bookinstance.id %}" class="link-dark text-decoration-none">{{ bookinstance.book }}
+            ({{ bookinstance.id }})</a>
     </li>
     {% endfor %}
 </ul>

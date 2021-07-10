@@ -3,11 +3,11 @@
 {% block content %}
 <h1>Book List</h1>
 {% if book_list %}
-<ul>
+<ul class="list-group list-group-flush">
   {% for book in book_list %}
-  <li>
-    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
-    (<a href="{{ book.author.get_absolute_url }}">{{book.author.full_name}}</a>)
+  <li class="list-group-item">
+    <a href="{{ book.get_absolute_url }}" class="link-dark text-decoration-none">{{ book.title }}</a>
+    (<a href="{{ book.author.get_absolute_url }}" class="link-dark text-decoration-none">{{book.author.full_name}}</a>)
   </li>
   {% endfor %}
 </ul>

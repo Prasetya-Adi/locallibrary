@@ -3,10 +3,10 @@
 {% block content %}
 <h1>Genre List</h1>
 {% if genre_list %}
-<ul>
+<ul class="list-group list-group-flush">
     {% for genre in genre_list %}
-    <li>
-        <a href="{{ genre.get_absolute_url }}">{{ genre.name }}</a>
+    <li class="list-group-item">
+        <a href="{{ genre.get_absolute_url }}" class="link-dark text-decoration-none">{{ genre.name }}</a>
     </li>
     {% endfor %}
 </ul>

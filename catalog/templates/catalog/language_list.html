@@ -3,10 +3,10 @@
 {% block content %}
 <h1>Language List</h1>
 {% if language_list %}
-<ul>
+<ul class="list-group list-group-flush">
     {% for language in language_list %}
-    <li>
-        <a href="{{ language.get_absolute_url }}">{{ language.name }}</a>
+    <li class="list-group-item">
+        <a href="{{ language.get_absolute_url }}" class="link-dark text-decoration-none">{{ language.name }}</a>
     </li>
     {% endfor %}
 </ul>
