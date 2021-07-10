@@ -112,7 +112,7 @@
                             {% if user.is_authenticated %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Staff</a>
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">STAFF</a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{% url 'books-create' %}">Create books</a>
                                     <a class="dropdown-item" href="{% url 'inst-create' %}">Create Instance</a>
@@ -127,7 +127,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">{{ user.get_username }}</a>
+                                    aria-expanded="false">{{ user.get_username|upper }}</a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{% url 'my-borrowed' %}">My Borrowed</a>
                                     <a class="dropdown-item" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
