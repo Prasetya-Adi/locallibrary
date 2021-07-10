@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Delete Instance</h1>
+
+<p>Are you sure you want to delete the Instance of book?</p>
+<h1>{{ bookinstance.book }}</h1>
+<p><strong>ID:</strong> {{ bookinstance.id }}</p>
+
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes, delete.">
+</form>
+
+{% endblock %}

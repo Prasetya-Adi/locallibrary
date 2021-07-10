@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>{{ bookinstance.book }}</h1>
+<p><strong>ID:</strong> {{ bookinstance.id }}</p>
+<p><strong>Imprit :</strong> {{ bookinstance.imprint }}</p> <!-- author detail link not yet defined -->
+<p><strong>Due Back :</strong> {{ bookinstance.due_back }}</p>
+<p><strong>Borrower:</strong> {{ bookinstance.borrower }}</p>
+<p><strong>Status:</strong> {{ bookinstance.status_detail }}
+
+
+</p>
+
+<div class="dropdown-divider"></div>
+<a href="{% url 'inst-delete' bookinstance.id %}">Delete Instance</a><br>
+<a href="{% url 'inst-update' bookinstance.id %}">Update Instance</a>
+
+{% endblock %}

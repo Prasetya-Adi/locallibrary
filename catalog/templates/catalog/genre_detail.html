@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Genre: {{ genre.name }}</h1>
+
+<div class="dropdown-divider"></div>
+<a href="{% url 'genre-delete' genre.id %}">Delete Author</a><br>
+<a href="{% url 'genre-update' genre.id %}">Update Author</a>
+
+{% endblock %}

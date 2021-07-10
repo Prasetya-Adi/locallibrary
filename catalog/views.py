@@ -4,33 +4,14 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from catalog.forms import RenewBookForm
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 
 # Create your views here.
-
-from .models import Book, Author, BookInstance, Genre
+from .models import Book, Author, BookInstance, Genre, Language
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
 
-
-class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
-    """Generic class-based view listing books on loan to current user."""
-    model = BookInstance
-    template_name = 'catalog/bookinstance_list_borrowed_user.html'
-    paginate_by = 10
-
-    def get_queryset(self):
-        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
-
-
-class AllLoanedBooksListView(LoginRequiredMixin, generic.ListView):
-    """Generic class-based view listing books on loan to current user."""
-    model = BookInstance
-    template_name = 'catalog/bookinstance_list_borrowed.html'
-    paginate_by = 10
-
-    def get_queryset(self):
-        return BookInstance.objects.filter(status__exact='o').order_by('due_back')
+# Index
 
 
 def index(request):
@@ -66,6 +47,8 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+# Book
+
 
 class BookListView(generic.ListView):
     model = Book
@@ -81,6 +64,14 @@ class BookCreate(CreateView):
     fields = '__all__'
 
 
+class BookUpdateView(UpdateView):
+    model = Book
+    # Not recommended (potential security issue if more fields added)
+    fields = '__all__'
+
+# Author
+
+
 class AuthorListView(generic.ListView):
     model = Author
     paginate_by = 10
@@ -90,22 +81,46 @@ class AuthorDetailView(generic.DetailView):
     model = Author
 
 
-class AuthorCreate(CreateView):
+class AuthorCreateView(CreateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
     initial = {'date_of_death': '11/06/2020'}
     template_name = 'catalog/author_form.html'
 
 
-class AuthorUpdate(UpdateView):
+class AuthorUpdateView(UpdateView):
     model = Author
     # Not recommended (potential security issue if more fields added)
     fields = '__all__'
 
 
-class AuthorDelete(DeleteView):
+class AuthorDeleteView(DeleteView):
     model = Author
     success_url = reverse_lazy('author')
+
+# User
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+
+
+class AllLoanedBooksListView(LoginRequiredMixin, generic.ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = BookInstance
+    template_name = 'catalog/bookinstance_list_borrowed.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o').order_by('due_back')
+
+# staff
 
 
 def renew_book_librarian(request, pk):
@@ -137,3 +152,90 @@ def renew_book_librarian(request, pk):
     }
 
     return render(request, 'catalog/book_renew_librarian.html', context)
+
+# Genre
+
+
+class GenreListView(generic.ListView):
+    model = Genre
+    paginate_by = 10
+
+
+class GenreDetailView(generic.DetailView):
+    model = Genre
+
+
+class GenreCreateView(CreateView):
+    model = Genre
+    fields = '__all__'
+    template_name = 'catalog/genre_form.html'
+    success_url = reverse_lazy('genre')
+
+
+class GenreUpdateView(UpdateView):
+    model = Genre
+    # Not recommended (potential security issue if more fields added)
+    fields = '__all__'
+
+
+class GenreDeleteView(DeleteView):
+    model = Language
+    success_url = reverse_lazy('genre')
+
+
+# Language
+
+class LangListView(generic.ListView):
+    model = Language
+
+
+class LangDetailView(generic.DetailView):
+    model = Language
+
+
+class LangCreateView(CreateView):
+    model = Language
+    fields = '__all__'
+    success_url = reverse_lazy('lang')
+    initial = {'name': ''}
+
+
+class LangUpdateView(UpdateView):
+    model = Language
+    # Not recommended (potential security issue if more fields added)
+    fields = '__all__'
+
+
+class LangDeleteView(DeleteView):
+    model = Language
+    success_url = reverse_lazy('lang')
+
+# Instance
+
+
+class InstListView(generic.ListView):
+    model = BookInstance
+    paginate_by = 20
+    ordering = ['-due_back']
+
+
+class InstDetailView(generic.DetailView):
+    model = BookInstance
+
+
+class InstCreateView(CreateView):
+    model = BookInstance
+    fields = '__all__'
+    success_url = reverse_lazy('inst')
+
+
+class InstUpdateView(UpdateView):
+    model = BookInstance
+    # Not recommended (potential security issue if more fields added)
+    fields = '__all__'
+    success_url = reverse_lazy('all-borrowed')
+
+
+class InstDeleteView(DeleteView):
+    model = BookInstance
+    success_url = reverse_lazy('inst')

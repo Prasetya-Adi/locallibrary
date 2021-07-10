@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Language: {{ language.name }}</h1>
+
+<div class="dropdown-divider"></div>
+<a href="{% url 'lang-delete' language.id %}">Delete Language</a><br>
+<a href="{% url 'lang-update' language.id %}">Update Language</a>
+
+{% endblock %}
